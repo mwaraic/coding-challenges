@@ -1,4 +1,4 @@
 #!/bin/sh
-pytest tests/test_calculator.py
+pytest tests
 
 python calc.py '6 * 7'
