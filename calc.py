@@ -40,4 +40,4 @@ if __name__ == "__main__":
         argument = argument.split()
         print(run(int(argument[0]), argument[1], int(argument[2])))
     else:
-        print('Please provide correct argument')
+        print('please provide correct argument')
