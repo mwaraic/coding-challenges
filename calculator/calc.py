@@ -2,7 +2,44 @@ from core.calculator import Calculator
 import sys
 
 
-def run(x: int, operator: str, y: int):
+def validate(argument: str):
+    # TO DO
+    return argument == argument
+
+
+def convert(infix_expression: str):
+    """Shunting Yard Algorithm
+    """
+
+    output, operators = [], []
+
+    precedences = {'+': 0, '-': 0, '*': 1, '/': 1}
+
+    for value in infix_expression:
+        if ord('0') <= ord(value) <= ord('9'):
+            output.append(value)
+        elif value in precedences.keys():
+            while len(operators) > 0 and operators[0] != '('  \
+                    and precedences[operators[0]] >= precedences[value]:
+                output.append(operators.pop(0))
+            operators.insert(0, value)
+        elif value == '(':
+            operators.insert(0, value)
+        elif value == ')':
+            while len(operators) > 0 and operators[0] != '(':
+                output.append(operators.pop(0))
+            if len(operators) > 0 and operators[0] == '(':
+                operators.pop(0)
+
+    while len(operators) > 0 and operators[0] != '(':
+        output.append(operators.pop(0))
+
+    postfix_expression = ' '.join(output)
+
+    return postfix_expression
+
+
+def operate(x: int, operator: str, y: int):
     obj = Calculator(x, y)
 
     if operator == '*':
@@ -20,24 +57,30 @@ def run(x: int, operator: str, y: int):
     return result
 
 
-def verify(argument: str):
-    if isinstance(argument, str):
-        if len(argument.split()) == 3:
-            if argument.split()[1] in ['*', '-', '+', '/']:
-                if ord('0') <= ord(argument.split()[0]) <= ord('9'):
-                    if ord('0') <= ord(argument.split()[2]) <= ord('9'):
-                        return True
-    return False
+def calculate(postfix_expression: str):
+    output = []
+
+    operators = ['+', '-', '*', '/']
+
+    for value in postfix_expression:
+        if ord('0') <= ord(value) <= ord('9'):
+            output.append(int(value))
+        elif value in operators:
+            item_1 = output.pop()
+            item_2 = output.pop()
+            output.append(operate(item_2, value, item_1))
+
+    return output[0]
 
 
 if __name__ == "__main__":
 
     argument = sys.argv[1]
 
-    result = verify(argument)
+    is_valid = validate(argument)
 
-    if result:
-        argument = argument.split()
-        print(run(int(argument[0]), argument[1], int(argument[2])))
+    if is_valid:
+        postfix_expression = convert(argument)
+        print(calculate(postfix_expression))
     else:
-        print('please provide correct argument')
+        print('invalid argument')
