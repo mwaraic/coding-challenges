@@ -6,7 +6,7 @@ class TestCalculator:
 
     def test_validate(self):
         # TO DO
-        assert self.obj.validate('1 * 2') is True
+        assert self.obj.validate() is True
 
     def test_convert(self):
         assert self.obj.convert() == '1 2 *'
