@@ -1,4 +1,4 @@
 #!/bin/sh
 pytest tests
 
-python calc.py '(4 * 3) - (9 / 8) * (7 - 2)'
+python calc.py '( 42 * 34 ) - ( 93 / 86 ) * ( 75 - 22 )'

@@ -9,7 +9,7 @@ class TestCalculator:
         assert self.obj.validate() is True
 
     def test_convert(self):
-        assert self.obj.convert() == '1 2 *'
+        assert self.obj.convert() == ['1', '2', '*']
 
     def test_operate(self):
         assert self.obj.operate(1, '+', 2) == 3
@@ -18,4 +18,4 @@ class TestCalculator:
         assert self.obj.operate(3, '/', 2) == 1.5
 
     def test_calculate(self):
-        assert self.obj.calculate('1 2 *') == 2
+        assert self.obj.calculate(['1', '2', '*']) == 2
